@@ -1,0 +1,113 @@
+2017-08-23: Release of NaN-Tb v3.1.4
+
+- minor fixes:
+	license text, file permissions, 
+	remove dependency on -lcholmod
+
+
+2017-08-14: Release of NaN-Tb v3.1.3
+
+- fix bug #43931: bug in help of corrcoef.m
+	reported by: locker@vp...
+- fix bug #47673: build failure for ppc64 architecture
+	reported by: Michel Normand
+- bug #48771 "Link against the shared library libsvm"
+    had been fixed previously in Nov 2017
+
+- tiedrank: increase matlab compatibility by allowing
+    third input argument
+
+
+2017-01-10: Release of NaN-tb v3.1.2
+
+- fix build when Octave does not support openmp
+
+2017-01-03: Release of NaN-tb v3.1.1
+
+- add Makefile to built release
+
+2016-11-30: Release of NaN-tb v3.1.0
+
+- fix bug 48426: built for Octave 4.2.0
+- prepare for using external libsvm and liblinear
+- fix typos, address compiler warnings and improve docu
+
+2016-08-10: Release of NaN-tb v3.0.3
+- tcdf: fix bug #48731 (thanks to Nir Krakauer)
+- coercoef: add comment on Matlab compatibiliy in help
+- test_fss, load_fisheriris: 
+          fix support on mingw platform (Windows)
+
+2016-07-30: Release of NaN-tb v3.0.2
+- Octave/Windows: setenv CC=gcc (fixes bug 47559)
+- no OpenMP for Octave/Windows and MacOSX
+
+
+2015-02-26: Release of NaN-tb v3.0.1
+
+- fixes version number 
+  two digit version number like 3.0 cannot be used in Octave-forge
+
+2015-09-12: Release of NaN-tb v2.8.3
+
+- ready for gcc/g++ v5 
+- honor environment variables CC and CXX
+- fix installer issue on OpenSuse
+- support debian hardening flags
+- internal improvents (in type and macro usage)
+- address a number of compiler warnings
+- bug fixes 
+
+2015-07-06: Release of NaN-tb v2.8.1
+
+- fix nantest to avoid crashing octave 4.0.0 on windows
+
+2015-06-24: Release of NaN-tb v2.8.0
+
+- fix Makefile for Octave4 on windows
+  (fixes #45363 and #44859)
+
+- check for sparse input matrices and
+  convert to full when needed
+
+2015-06-01: Release of NaN v.2.7.6
+
+- improve accuracy of normcdf (bug #38170) 
+
+2015-04-23: Release of NaN v2.7.5
+
+- fix compiler issue with __isnan
+- do not display diagnostic messages
+
+2015-04-12
+
+- upgrade to libsvm-3.12
+- fix multi-threaded build (make -j) 
+- improve some tests
+
+
+2015-03-31: Release of NaN 2.7.2
+
+- bug fix in nanstd.m 
+- cross-compiler issues in histo_mex
+- fix Makefile for use with Matlab
+- address compatibility issue on debian/jessie
+- minor issues (some compiler warnings are addressed)
+
+
+2015-01-24: Release of NaN 2.7.1
+
+- support for MacOSX added
+  (tested on Homebrew Octave)
+
+
+2015-01-17: Release of NaN 2.7.0
+
+Fix compatibility issues with core functions in Matlab and Octave
+- zscore: order of input output argument
+- mahal gives now same result than matlab
+- sumskipnan allows DIM argument larger than ndims
+- a few minor issues
+
+For changes of previous releases see: 
+  http://pub.ist.ac.at/~schloegl/matlab/NaN/CHANGELOG
