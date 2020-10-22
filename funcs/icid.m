@@ -1,4 +1,9 @@
 %This Function is for selecting the artifactual ICs
+% Edited by Obada Al Zoubi; obada.y.alzoubi@gmail.com
+% The function is part of APPREAR pipeline to detect artifacts
+% automatically. 
+% icid can detect the following artifacts: 
+% 1- eye blinking;  2-saccades;  3-muscles; 4-single channel;and 5-ballistocardiogram  
 function [cbicind,saccade_IC,blink_IC,topomap,spectra_BCG_ICs,tpblink,tpsac,smolregion,singchan,muscleloc] = icid(ic,A,mixsig,srte,mriperd)
 tol = 1.0e-6;
 % Number of ICs is equal to number of channels

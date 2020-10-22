@@ -55,7 +55,7 @@ if ~isempty(subj_ecg_file) && strcmp(EEG.APPEAR.BCG_Crorrection, 'Pulse_Ox')
     EEG.APPEAR.PulseOX.Peaks     = Peak_locations;
     EEG.APPEAR.PulseOX.Fs        = EEG.APPEAR.Fs;
     EEG.APPEAR.PulseOX.waveform  = pusleox_waveform ;
-    
+  EEG.APPEAR.PulseOX.waveform  
 end
 
 

@@ -53,11 +53,11 @@ mrkA = mrkA(1:round(scntme/tr));
 
 EEG.bad = [];
 EEG.badmot = [];
-EEG.APEAR.TR              = tr;% seconds
-EEG.APEAR.slice_per_TR    = slmkpertr; % slices per volume 
-EEG.APEAR.scntme          = scntme; % Scan length in secs
-EEG.APEAR.chlb            = chlb; % labels of channels 
-EEG.APEAR.mrkA            = mrkA; % slice selection markers
+EEG.APPEAR.TR              = tr;% seconds
+EEG.APPEAR.slice_per_TR    = slmkpertr; % slices per volume 
+EEG.APPEAR.scntme          = scntme; % Scan length in secs
+EEG.APPEAR.chlb            = chlb; % labels of channels 
+EEG.APPEAR.mrkA            = mrkA; % slice selection markers
 
 toc;
 end

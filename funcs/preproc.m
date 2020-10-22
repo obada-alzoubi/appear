@@ -1,14 +1,14 @@
 function EEG = preproc(EEG)
-    tr =EEG.APEAR.TR;
-    slpertr = EEG.APEAR.slice_per_TR;
-    mrkA    = EEG.APEAR.mrkA;
-    dwnsmr = EEG.APEAR.Fs;
-    bpfrq = EEG.APEAR.filterRange;
-    slfrq = slpertr / tr;
-    temp = [60, 26, slfrq*(1:1:100)];
-    temp = temp(temp<=max(2*bpfrq(2),temp(1)));
-    temp = sort(temp);
-    bsfrq = zeros(numel(temp),2);
+    tr       = EEG.APPEAR.TR;
+    slpertr  = EEG.APPEAR.slice_per_TR;
+    mrkA     = EEG.APPEAR.mrkA;
+    dwnsmr   = EEG.APPEAR.Fs;
+    bpfrq    = EEG.APPEAR.filterRange;
+    slfrq    = slpertr / tr;
+    temp     = [60, 26, slfrq*(1:1:100)];
+    temp     = temp(temp<=max(2*bpfrq(2),temp(1)));
+    temp     = sort(temp);
+    bsfrq    = zeros(numel(temp),2);
         for ii=1:numel(temp)
         bsfrq(ii,1) = temp(ii)-0.5;
         bsfrq(ii,2) = temp(ii)+0.5;

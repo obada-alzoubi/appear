@@ -32,17 +32,16 @@
 %   Wong, Chung-Ki, et al. "Automatic EEG-assisted retrospective motion correction for fMRI (aE-REMCOR)." Neuroimage 129 (2016): 133.
 
 
-function [status] = APEAR( EEG, outdir, suffix)
+function [finalEEG] = APPEAR( EEG, outdir, suffix)
 
 % Inputs 
-%- EEG          : EEG object from EEGLAB with APEAR structure 
+%- EEG          : EEG object from EEGLAB with APPEAR structure 
 %- outdir       : output directory
 %- suffix       : suffix to add to the ouput files
 %% General config. 
-% Indicator for progress 
-status          = -1; 
+
 % plot only part of the ECG signal for QA. 
-polt_ecg_range  = 5:35 ;% Plot from 5 to 35 secs of ECG 
+polt_ecg_range  = EEG.polt_ecg_range;% Plot from 5 to 35 secs of ECG 
 
 
 %% Gradient Artifact Correction, DownSampling, and Filtering
@@ -60,7 +59,7 @@ pop_writebva(EEG, strcat(outdir, '/', suffix, '_eeg_p-1'));
 EEG1            = EEG;% to do QRS detection by fmrib
 EEG2            = EEG;
 % Apply some filtering for ECG 
-ECG_num         = EEG.APEAR.ECG_ch_ind; 
+ECG_num         = EEG.APPEAR.ECG_ch_ind; 
 [nuECG,deECG]   = butter(3,[0.5,15]/(0.5*EEG.srate));
 EEG1.data(ECG_num,:) = filtfilt(nuECG,deECG,EEG1.data(ECG_num,:));
 EEG1            = pop_fmrib_qrsdetect(EEG1,ECG_num,'qrs','no'); % Detect the QRS complexes
@@ -93,7 +92,7 @@ csvwrite(strcat(outdir, '/', suffix, '_', 'fMRIB_ECG.csv'),ECG)
 h=figure; plot(ECG)
 hold on; plot( QRS ,...
     ECG(QRS),  'O');
-xlim([polt_ecg_range(1)*EEG.APEAR.Fs,polt_ecg_range(end)*EEG.APEAR.Fs]);
+xlim([polt_ecg_range(1)*EEG.APPEAR.Fs,polt_ecg_range(end)*EEG.APPEAR.Fs]);
 
 saveas(h, strcat(outdir, '/', suffix, '_', 'fMRIB.png'));
 close(h);
@@ -103,7 +102,7 @@ close(h);
 fprintf("Try to detect heart waveform peaks using Chung Ki's \n" )
 
 % determine cardiac period
-[pkloc,~, ~, ~, ~,~] = cardperiod(EEG2, EEG2.APEAR.slice_per_TR/EEG2.APEAR.TR);
+[pkloc,~, ~, ~, ~,~] = cardperiod(EEG2, EEG2.APPEAR.slice_per_TR/EEG2.APPEAR.TR, EEG.APPEAR.ECG_ch_ind);
 % Addd R Peak markers from Chung Ki's methods
 EEG2.event           = AddMarker(EEG2.event,pkloc,1,0, 'R','Response');
 EEG2.event           = sortlatency(EEG2.event,1);
@@ -125,13 +124,13 @@ for ii=1:max(evtsz(1),evtsz(2))
     end
 end
 % Calc. HR from Chung Ki method 
-HR2           = (EEG2.APEAR.Fs./diff(Rpeaks))*60;
+HR2           = (EEG2.APPEAR.Fs./diff(Rpeaks))*60;
 meanHR2       = mean(HR2);
 % Plot for QA
 h=figure; plot(ECG)
 hold on; plot( Rpeaks,...
     ECG(Rpeaks),  'O');
-xlim([polt_ecg_range(1)*EEG2.APEAR.Fs,polt_ecg_range(end)*EEG2.APEAR.Fs]);
+xlim([polt_ecg_range(1)*EEG2.APPEAR.Fs,polt_ecg_range(end)*EEG2.APPEAR.Fs]);
 
 saveas(h, strcat(outdir, '/', suffix, '_', 'ChungKi.png'));
 close(h);
@@ -142,38 +141,36 @@ fprintf("Try to detect heart waveform peaks using pulse oximeter .. in case you 
 fprintf("Select best correction methods for BCG .. then apply it \n" )
 % if you are sure that you want to use Pulse Ox. (recommended!)
 
-switch EEG.APEAR.BCG_Crorrection 
+switch EEG.APPEAR.BCG_Crorrection 
     
     case 'Pulse_Ox'
-        pusleox_waveform = EEG.APEAR.PulseOX.waveform;
+        pusleox_waveform = EEG.APPEAR.PulseOX.waveform;
 
         h=figure; plot(pusleox_waveform)
-        hold on; plot( EEG.APEAR.PulseOX.Peaks,...
-            pusleox_waveform(EEG.APEAR.PulseOX.Peaks),  'O');
-        xlim([polt_ecg_range(1)*EEG.APEAR.PulseOX.Fs,...
-            polt_ecg_range(end)*EEG.APEAR.PulseOX.Fs]);
+        hold on; plot( EEG.APPEAR.PulseOX.Peaks,...
+            pusleox_waveform(EEG.APPEAR.PulseOX.Peaks),  'O');
+        xlim([polt_ecg_range(1)*EEG.APPEAR.PulseOX.Fs,...
+            polt_ecg_range(end)*EEG.APPEAR.PulseOX.Fs]);
 
         saveas(h, strcat(outdir, '/', suffix, '_', 'PulseOx.png'));
         close(h);
 
-        HR         = (EEG.APEAR.Fs./diff(EEG.APEAR.PulseOX.Peaks))*60;% in min
+        HR         = (EEG.APPEAR.Fs./diff(EEG.APPEAR.PulseOX.Peaks))*60;% in min
         meanHR3     = mean(HR);
   
-        EEG                    = fmrib_pas(EEG2,EEG.APEAR.PulseOX.Peaks,'mean',21); %OZ: From Ahmad 
+        EEG                    = fmrib_pas(EEG2,EEG.APPEAR.PulseOX.Peaks,'mean',21); %OZ: From Ahmad 
         selected               = 'PulseOX'; % For later analysis, mark that we selected Chung Ki ECG
     
     case 'fMRIB'         
            % fMRIB
-            EEG1     = pop_fmrib_pas(EEG1,'qrs','mean',21); %OZ:  From Ahmad
+            EEG     = pop_fmrib_pas(EEG1,'qrs','mean',21); %OZ:  From Ahmad
             %EEG3 = pop_fmrib_pas(EEG3,'qrs','obs',4);
-            EEG      = EEG1;
             selected = 1; % For later analysis, mark that we selected fmrib ECG
             % 
     case 'ACCD'
             % Chung Ki's method 
-            EEG2     = fmrib_pas(EEG2,pkloc,'mean',21); %OZ: From Ahmad 
+            EEG     = fmrib_pas(EEG2,pkloc,'mean',21); %OZ: From Ahmad 
             %EEG3 = fmrib_pas(EEG3,pkloc,'obs',4); % From Ahmad 
-            EEG      = EEG2;
             selected = 2; % For later analysis, mark that we selected Chung Ki ECG
 
     otherwise
@@ -181,10 +178,10 @@ switch EEG.APEAR.BCG_Crorrection
 end 
 %Write HR info to disck 
 meanHR          = [meanHR1 meanHR2 meanHR3 selected];
-writematrix(strcat(outdir, '/', suffix, '_', 'HR_info.png'), EEG.APEAR.BCG_Crorrection);
+writematrix(strcat(outdir, '/', suffix, '_', 'HR_info.png'), EEG.APPEAR.BCG_Crorrection);
 
 % eeg-ecg separation
-[EEG.data,EEG.nbchan,~,~] = eegecgsep(EEG.data,EEG.nbchan,EEG.pnts,EEG.APEAR.chlb);
+[EEG.data,EEG.nbchan,~,~] = eegecgsep(EEG.data,EEG.nbchan,EEG.pnts,EEG.APPEAR.chlb);
 
 clear EEG3 EEG1 EEG2
 %% Bad Interval Detection
@@ -215,19 +212,19 @@ n     = size(EEG.data,2);
     
 EEG.pnts = n;
 EEG = pop_runica(EEG, 'icatype', 'runica', 'extended',1,'interrupt','off');
-EEG.chanlocs=loadbvef('BC-MR-32.bvef');
+
 EEG.chanlocs(1)=[]; %removing GRND channel
 EEG.chanlocs(1)=[]; %removing REF channel
-EEG.chanlocs(32)=[]; %removing ECG channel
+EEG.chanlocs(EEG.APPEAR.ECG_ch_ind)=[]; %removing ECG channel
 W = EEG.icaweights*EEG.icasphere;
 A = inv(W);
 EEG.icawinv     = pinv(EEG.icaweights*EEG.icasphere); % a priori same result as inv    
 
-EEG.icachansind = 1:31;
+EEG.icachansind = setdiff(1:size(EEG.data,2), EEG.APPEAR.ECG_ch_ind);
 EEG.chanlocs    = loadbvef('BC-MR-32.bvef');
 EEG.chanlocs(1) = []; %removing GRND channel
 EEG.chanlocs(1) = []; %removing REF channel
-EEG.chanlocs(32)= []; %removing ECG channel
+EEG.chanlocs(EEG.APPEAR.ECG_ch_ind)= []; %removing ECG channel
 
 %OZ: plot IC maps
 h              = figure;          
@@ -248,7 +245,7 @@ S               = double(W)*double(EEG_tmp.data);
 % OZ chnage from seconds to milliseconds 
 EEG.times      = EEG.times/1000;
 % OZ: Ahamd set these Parmaters
-rate           = 1/EEG.APEAR.Fs;
+rate           = 1/EEG.APPEAR.Fs;
 EEG.times      = [0:rate:(size(EEG.data,2)-1)*rate];
 
 %% Classify ICs
@@ -297,18 +294,8 @@ end
 
 finalEEG.event     =sortlatency(finalEEG.event,1);
 
-% Save final EEG
-corrEEG_filename = strcat(outdir, '/', suffix, '_', 'eeg_p-2');
-% As edf
-pop_writebva(finalEEG,corrEEG_filename);
-% as MAT
-save(strcat(corrEEG_filename, '.mat'),'finalEEG');
-% As CSV
-csvwrite(strcat(corrEEG_filename, '.csv'),finalEEG.data );
-
-clear EEG_tmp; 
 close all;
-status = 1; 
+
 
 end
 
