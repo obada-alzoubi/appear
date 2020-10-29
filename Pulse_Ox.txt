@@ -1,1 +1,0 @@
-demo_out/test_HR_info.png
