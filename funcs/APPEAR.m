@@ -37,11 +37,11 @@ function [finalEEG] = APPEAR( EEG, outdir, suffix)
 % Inputs 
 %- EEG          : EEG object from EEGLAB with APPEAR structure 
 %- outdir       : output directory
-%- suffix       : suffix to add to the ouput files
+%- suffix       : suffix to add to the output files
 %% General config. 
 
 % plot only part of the ECG signal for QA. 
-polt_ecg_range  = EEG.polt_ecg_range;% Plot from 5 to 35 secs of ECG 
+polt_ecg_range  = EEG.APPEAR.polt_ecg_range;% Plot from 5 to 35 secs of ECG 
 
 
 %% Gradient Artifact Correction, DownSampling, and Filtering
@@ -54,7 +54,7 @@ pop_writebva(EEG, strcat(outdir, '/', suffix, '_eeg_p-1'));
 
 
 %% Try built-in BCG correction on EEGLab (FMRIB plugin)
-%Let's clean unused varialbes and optimize the speed 
+%Let's clean unused variables and optimize the speed 
 % Make two copies of the EEG data to try different BCG corrections.
 EEG1            = EEG;% to do QRS detection by fmrib
 EEG2            = EEG;
@@ -196,10 +196,10 @@ EEG.chanlocs(ECG_num)= [];
 % OZ: Ahmad set these Paramters
 % OZ: pop_rejcont might not work 
 badInter              =[];
-[EEG_poten, badInter_poten]       = pop_rejcont(EEG, 'elecrange',[3:31] ,...
+[EEG_poten, badInter_poten]       = pop_rejcont(EEG, 'elecrange',setdiff(1:size(EEG, 1), ECG_num) ,...
     'freqlimit',[0.5 7] ,'threshold',8,'epochlength',0.5,...
     'contiguous',4,'addlength',0.25,'taper','hamming');
-% OZ: 
+% OZ: pop_rejcont fails sometimes and returns empty object. 
 if ~isempty(EEG_poten.data)
     EEG     = EEG_poten;
     badInter= badInter_poten;
@@ -213,21 +213,15 @@ n     = size(EEG.data,2);
 EEG.pnts = n;
 EEG = pop_runica(EEG, 'icatype', 'runica', 'extended',1,'interrupt','off');
 
-EEG.chanlocs(1)=[]; %removing GRND channel
-EEG.chanlocs(1)=[]; %removing REF channel
-EEG.chanlocs(EEG.APPEAR.ECG_ch_ind)=[]; %removing ECG channel
 W = EEG.icaweights*EEG.icasphere;
 A = inv(W);
 EEG.icawinv     = pinv(EEG.icaweights*EEG.icasphere); % a priori same result as inv    
 
-EEG.icachansind = setdiff(1:size(EEG.data,2), EEG.APPEAR.ECG_ch_ind);
-EEG.chanlocs(1) = []; %removing GRND channel
-EEG.chanlocs(1) = []; %removing REF channel
-EEG.chanlocs(EEG.APPEAR.ECG_ch_ind)= []; %removing ECG channel
+EEG.icachansind = setdiff(1:size(EEG.data,2), ECG_num);
 
 %OZ: plot IC maps
 h              = figure;          
-pop_topoplot(EEG, 0, setdiff(1:size(EEG.data,2), EEG.APPEAR.ECG_ch_ind) ,'',[6 6] ,0,'electrodes','on');
+pop_topoplot(EEG, 0, 1:size(EEG.data,1) ,'',[6 6] ,0,'electrodes','on');
 print(strcat(outdir, '/', suffix, '_', 'ICA_topo.png'),'-dpng')
 
 close(h);
@@ -270,6 +264,10 @@ ms        = or(muscleloc,singchan');
 allart    = bs+ms+cbicind;
 allart    = sign(allart);
 NeuralICs = find(allart==1);
+
+csvwrite(strcat(outdir, '/', suffix, '_', 'ICA_artficual.csv'), allart)
+csvwrite(strcat(outdir, '/', suffix, '_', 'ICA_neural.csv'), NeuralICs)
+
 % A to A'
 A(:,NeuralICs) = 0;
 A_prime   = A;

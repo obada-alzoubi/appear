@@ -15,7 +15,7 @@ function [EEG,chlb,mrkA] = load_EEG(indir,infile,scntme,tr,slmkpertr)
 % Laureate Institute for Brain Research
 % email:obada.y.alzoubi@gmail.com
 % Website: http://www.obadaalzoubi.com
-% Last revision: 7/19/2020
+% Last revision: 10/26/2020
 
 fprintf('Loading eeg data from %s/%s\n',indir,infile);
 EEG = pop_loadbv(indir,strcat(infile,'.vhdr')); % loading EEG Data
@@ -51,8 +51,8 @@ tm1 = tm2 - smsz + 1;
 mrkA = tm1:round(tr*EEG.srate):size(EEG.data,2);
 mrkA = mrkA(1:round(scntme/tr));
 
-EEG.bad = [];
-EEG.badmot = [];
+EEG.bad                    = [];
+EEG.badmot                 = [];
 EEG.APPEAR.TR              = tr;% seconds
 EEG.APPEAR.slice_per_TR    = slmkpertr; % slices per volume 
 EEG.APPEAR.scntme          = scntme; % Scan length in secs
