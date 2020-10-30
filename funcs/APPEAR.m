@@ -178,7 +178,7 @@ switch EEG.APPEAR.BCG_Crorrection
 end 
 %Write HR info to disck 
 meanHR          = [meanHR1 meanHR2 meanHR3 selected];
-writematrix(strcat(outdir, '/', suffix, '_', 'HR_info.png'), EEG.APPEAR.BCG_Crorrection);
+csvwrite(strcat(outdir, '/', suffix, '_', 'HR_info.csv'), meanHR);
 
 % eeg-ecg separation
 [EEG.data,EEG.nbchan,~,~] = eegecgsep(EEG.data,EEG.nbchan,EEG.pnts,EEG.APPEAR.chlb);

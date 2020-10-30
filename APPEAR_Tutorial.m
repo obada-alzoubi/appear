@@ -65,7 +65,7 @@ end
 EEG2 = APPEAR(EEG, subj_out_folder, 'test');
 
 %% Output APPEAR to a file 
-
+suffix ='final';
 % Save final EEG
 corrEEG_filename = strcat(subj_out_folder, '/', suffix, '_', 'eeg_p-2');
 % As edf
