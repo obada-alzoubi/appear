@@ -11,7 +11,10 @@ and task-based EEG-fMRI acquisitions. APPEAR offers A-to-Z preprocessing for EEG
 ready-to-analyze output while cleaning MR, ballistocardiogram (BCG), pulse, eye blinking, saccades,
 muscles, and single-channel artifacts. This is achieved by following well-validated steps using signal
 processing and Independent Component Analysis (ICA). \
-Also, APPEAR can be used to process large scale datasets while supporting parallel implementations. In this technical report, we provide a detailed explanation of using the toolbox while highlighting the important technical details for the user. APPEAR is implemented using MATLAB software with dependencies on EEGLAB (Delorme & Makeig, 2004) and fMRIb (Niazy, Beckmann, Iannetti, Brady, & Smith, 2005) toolboxes. We elaborate on several parameters that are used in the APPEAR toolbox using demo examples. Additionally, we provide information about several functions and features offered with the APPEAR toolbox. For APPEAR validation and analyses,
+Also, APPEAR can be used to process large scale datasets while supporting parallel implementations. In this technical report, we provide a detailed explanation of using the toolbox while highlighting the important technical details for the user. APPEAR is implemented using MATLAB software with dependencies on EEGLAB (Delorme & Makeig, 2004) and fMRIb (Niazy, Beckmann, Iannetti, Brady, & Smith, 2005) toolboxes. We elaborate on several parameters that are used in the APPEAR toolbox using demo examples. Additionally, we provide information about several functions and features offered with the APPEAR toolbox. For APPEAR validation and analyses.
+
+<img src="images/p3.png" alt="Fig1" class="inline"/>
+[source: Ahmad Mayeli, Obada Al Zoubi et al 2021 J. Neural Eng. 18 0460b4]
 
 # Requirements #
 Please use MATLAB 2018 or later to ensure that the APPEAR toolbox is working correctly. Also, please
