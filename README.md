@@ -43,5 +43,5 @@ EEG object with APPEAR name within EEG object:
 ```Matlab
 >>EEG.APPEAR
 ``` 
-<img src="images/p1.png" alt="hi" class="inline"/>
-<img src="images/p2.png" alt="hi" class="inline"/>
+<img src="images/p1.PNG" alt="hi" class="inline"/>
+<img src="images/p2.PNG" alt="hi" class="inline"/>
