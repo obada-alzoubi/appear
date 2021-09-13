@@ -67,21 +67,27 @@ should be equal to the number of TRs in the data. (e.g., TR=2 and scan time =200
 should have 100 values in the vector corresponding to the indices of the beginnings of each TR).
 - APPEAR uses EEG object from EEGLAB to store APPEAR configuration. The structure will be under
 EEG object with APPEAR name within EEG object:
+
 ```Matlab
 EEG.APPEAR
 ``` 
-<img src="images/p1.png" alt="hi" class="inline"/>
+<img src="images/p1.PNG" alt="Fig1" class="inline"/>
 ```Matlab
 EEG.APPEAR.PulseOX
 ```
-<img src="images/p2.png" alt="hi" class="inline"/>
+
+<img src="images/p2.PNG" alt="Fig1" class="inline"/>
+
 Having introduced the main structure information, the next part put all pieces together to run APPEAR on
 our demo example.
+
 # Demo Example
+
 - Download the data and place it inside a demo folder.
 https://www.dropbox.com/sh/2f8wn1vlw9eniif/AABfwK2j9uptBMMafvNTw8eNa?dl=0
 The data contain one subject with resting-state recording.
 - Add the required paths of the toolbox EEGLAB paths.
+
 ```Matlab
 %% Add required paths and functions
 addpath('funcs');
@@ -90,6 +96,7 @@ addpath('eeglab2019_0');
 close all;
 ```
 - Set the directories of the input and the output. Use the EEG file name without extensions.
+
 ```Matlab
 %% Input data
 sub_folder =strcat(pwd, '/demo/');
@@ -103,6 +110,7 @@ mkdir(subj_out_folder)
 ```
 - set the MRI specific parameters:
 - Read data into EEGLAB format. It should be noted that load_EEG function reads the BrainVision
+
 ```Matlab
 %% Store Configuration in EEG.APEAR
 TR = 2;% seconds
@@ -112,6 +120,7 @@ scntme = 480; % Scan length in secs
 Analyzer format. If you have other formats like ‘EDF’, you may want to edit the function to read
 the target format into the EEG object of EEGLAB. The function should use the same data structure
 as in EEGLAB.
+
 ```Matlab
 %% Read EEG, channel names and Slice Markers (R128)
 % Step 1
@@ -120,6 +129,7 @@ as in EEGLAB.
 EEG.chanlocs = loadbvef('BC-MR-32.bvef');
 ```
 - Set the APPEAR parameters.
+
 ```Matlab
 EEG.APEAR.Fs = 250;% Hz: frequency of the EEG output
 EEG.APEAR.filterRange = [1 70];%Hz: filter EEG between 1 and 70 Hz
@@ -134,6 +144,7 @@ subject, which is store in subj1_ECG.1D. Then, we will apply peak detection and 
 sampling rate with EEG data. After that, we will store all information in a substructure under the
 APPEAR structure.
 - Set QRS complex detection parameters. This is specific for ‘Pulse_Ox’ method.
+
 ```Matlab
 %% If we want to use Pulse Ox for BCG correction, add required fields
 % Step 2
@@ -154,11 +165,13 @@ frequency configuration or specific pulse oximeter format, you need to change th
 
 - APPEAR function is ready to run. APPEAR function takes minimum information as the EEG
 object, output folder, and output prefix for the subject.
+
 ```Matlab
 %% Run APEAR
 [EEG2] = APPEAR(EEG, subj_out_folder, 'test');
 ```
 - You can write the output to a folder as follows (Optional)
+
 ```Matlab
 %% Save final EEG
 corrEEG_filename = strcat(subj_out_folder, '/', suffix, '_', 'eeg_p-2');
@@ -188,6 +201,7 @@ the toolbox and tries to automatically find the artifacts corresponding to eye b
 muscles, single-channel, and ballistocardiogram artifacts. To do so, ICA is applied to the EEG
 data, and then statistical and topographical analyses are conducted inside icid function to
 determine the ICs corresponding to artifacts.
+
 ```Matlab
 [cbicind,~,~,~,~,tpblink,tpsac,~,singchan,muscleloc] =
 icid(W*double(EEG.data),double(A),double(EEG.data),EEG.srate,EEG.times(end));
