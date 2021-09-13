@@ -72,6 +72,7 @@ EEG object with APPEAR name within EEG object:
 EEG.APPEAR
 ``` 
 <img src="images/p1.PNG" alt="Fig1" class="inline"/>
+
 ```Matlab
 EEG.APPEAR.PulseOX
 ```
