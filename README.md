@@ -13,7 +13,7 @@ muscles, and single-channel artifacts. This is achieved by following well-valida
 processing and Independent Component Analysis (ICA). \
 Also, APPEAR can be used to process large scale datasets while supporting parallel implementations. In this technical report, we provide a detailed explanation of using the toolbox while highlighting the important technical details for the user. APPEAR is implemented using MATLAB software with dependencies on EEGLAB (Delorme & Makeig, 2004) and fMRIb (Niazy, Beckmann, Iannetti, Brady, & Smith, 2005) toolboxes. We elaborate on several parameters that are used in the APPEAR toolbox using demo examples. Additionally, we provide information about several functions and features offered with the APPEAR toolbox. For APPEAR validation and analyses.
 
-<img src="images/p3.png" alt="Fig1" class="inline"/>
+<img src="images/p3.png" width="400" height="400"  alt="Fig1" class="inline"/>
 [source: Ahmad Mayeli, Obada Al Zoubi et al 2021 J. Neural Eng. 18 0460b4]
 
 # Requirements #
@@ -80,7 +80,7 @@ EEG.APPEAR
 EEG.APPEAR.PulseOX
 ```
 
-<img src="images/p2.PNG" alt="Fig1" class="inline"/>
+<img src="images/p2.PNG" width="200" height="200"  alt="Fig1" class="inline"/>
 
 Having introduced the main structure information, the next part put all pieces together to run APPEAR on
 our demo example.
