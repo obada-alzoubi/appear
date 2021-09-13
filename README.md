@@ -1,7 +1,7 @@
 # APPEAR Toolbox
 ## _An Automatic Pipeline for EEG Artifact Reduction_
 
-[![N|Solid](https://cldup.com/dTxpPi9lDf.thumb.png)](https://nodesource.com/products/nsolid)
+## _ Codes and scripts are maintained by Obada Al Zoubi. If you have any questions, please reach out to me at my email: obada.y.alzoubi@gmail.com _ 
 
 Removing artifacts from simultaneous EEG-fMRI recordings is a challenging issue since it requires manual
 attending with specialized expertise. Additionally, manual correction is prone to experimenter biases in
