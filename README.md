@@ -13,7 +13,7 @@ muscles, and single-channel artifacts. This is achieved by following well-valida
 processing and Independent Component Analysis (ICA). \
 Also, APPEAR can be used to process large scale datasets while supporting parallel implementations. In this technical report, we provide a detailed explanation of using the toolbox while highlighting the important technical details for the user. APPEAR is implemented using MATLAB software with dependencies on EEGLAB (Delorme & Makeig, 2004) and fMRIb (Niazy, Beckmann, Iannetti, Brady, & Smith, 2005) toolboxes. We elaborate on several parameters that are used in the APPEAR toolbox using demo examples. Additionally, we provide information about several functions and features offered with the APPEAR toolbox. For APPEAR validation and analyses.
 
-<img src="images/p3.png" width="400" height="400"  alt="Fig1" class="inline"/>
+<img src="images/p3.png" width="600" height="800"  alt="Fig1" class="inline"/>
 [source: Ahmad Mayeli, Obada Al Zoubi et al 2021 J. Neural Eng. 18 0460b4]
 
 # Requirements #
@@ -210,6 +210,12 @@ determine the ICs corresponding to artifacts.
 [cbicind,~,~,~,~,tpblink,tpsac,~,singchan,muscleloc] =
 icid(W*double(EEG.data),double(A),double(EEG.data),EEG.srate,EEG.times(end));
 ```
+# Sample of Cleaned data (Task and Resting-State Data )
+<img src="images/p4.PNG"  alt="Fig1" class="inline"/>
+
+- Left panel: Averaged waveforms and topographical maps for ERP waveforms (i.e., N2, P3) using APPEAR and Manual corrections among 8 participants. A) ERP Waveforms comparing automated (green) and manual (blue) preprocessing pipelines are displayed at all midline measurement electrodes. Time-zero represents the onset of the auditory stop-signal stimulus. Shaded areas represent the standard error of the mean for the ERP signal at each time point. Presented waveforms were calculated from average mastoid referenced EEG data.  B1) N2 scalp topography from the automated pipeline represents average activation across the scalp during the measurement window relative to the 200 ms pre-stimulus baseline. B2) P3 scalp topography from the automated pipeline represents average activation across the scalp during the measurement window relative to the 200 ms pre-stimulus baseline. C1) N2 scalp topography from the manual pipeline represents average activation across the scalp during the measurement window relative to the 200 ms pre-stimulus baseline C2) P3 scalp topography from the manual pipeline represents average activation across the scalp during the measurement window relative to the 200 ms pre-stimulus baseline.
+- Right panel:The time/frequency comparison (Wavelet) between APPEAR and Manually Corrected EEG Data for the exemplar four Subjects. The Continuous Wavelet Transform (CWT) was applied to the data after taking the average EEG signal among all channels (i.e., 31 channels). To compare the results between the manually and automatically corrected EEG sets, we plotted the time-frequency analysis for only a 3-mintute segment of the EEG recording taken from the middle of the EEG recording (60 seconds towards the end of the recording) for each individual subject.  The figures for all subjects show a similar pattern for the manually and automatically corrected EEG sets. We used Structural similarity (SSIM) index to compute the similarities between APPEAR and manually corrected images.   Please refer to the supplement for CWT plots for the remaining subjects.
+[source: Ahmad Mayeli, Obada Al Zoubi et al 2021 J. Neural Eng. 18 0460b4]
 # References
 - Delorme, A., & Makeig, S. (2004). EEGLAB: an open source toolbox for analysis of single-trial EEG
 dynamics including independent component analysis. Journal of neuroscience methods, 134(1),
