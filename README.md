@@ -2,8 +2,9 @@
 ## _An Automatic Pipeline for EEG Artifact Reduction_
 
 #### _Codes and scripts are maintained by Obada Al Zoubi. If you have any questions, please reach out to me at my email: obada.y.alzoubi@gmail.com_ 
-#### _Please refer to this publication Ahmad Mayeli, Obada Al Zoubi et al 2021 J. Neural Eng. 18 0460b4 for in-depth analysis and scientific validation of the pipeline_
+#### _Please refer to  Ahmad Mayeli*, Obada Al Zoubi* et al 2021 J. Neural Eng. 18 0460b4 for in-depth analysis and scientific validation of the pipeline_
 
+# Why APPEAR Toolbox ?
 Removing artifacts from simultaneous EEG-fMRI recordings is a challenging issue since it requires manual
 attending with specialized expertise. Additionally, manual correction is prone to experimenter biases in
 cleaning data. Thus, we developed a fully automated pipeline for EEG artifacts reduction (APPEAR).
