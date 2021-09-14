@@ -1,8 +1,8 @@
 # APPEAR Toolbox
 ## _An Automatic Pipeline for EEG Artifact Reduction_
-
+#### Code maintainer is: Obada Al Zoubi
 #### _If you have any questions, please reach out to me at my email: obada.y.alzoubi@gmail.com_
-
+Also, check my website for more infomration about me [www.obadaalzoubi.com]
 # Why APPEAR Toolbox ?
 Removing artifacts from simultaneous EEG-fMRI recordings is a challenging issue since it requires manual
 attending with specialized expertise. Additionally, manual correction is prone to experimenter biases in
@@ -41,10 +41,10 @@ fMRIb \
 
 # APPEAR Configuration Structure #
 ### APPEAR structure has the following fields that are needed for running the pipeline:
-- **APPEAR.Fs**: A double, the desired downsampling for the output in Hz.
+- **_APPEAR.Fs**: A double, the desired downsampling for the output in Hz.
 - APPEAR.FilterRange: A vector of two doubles, representing the lower and upper ranges to filter
 the EEG data.
-- **APPEAR.BCG_Corrention**: A string that takes either ‘Pulse_Ox’ or ‘fMRIb’ or ‘MSPD, the
+- **_APPEAR.BCG_Corrention**: A string that takes either ‘Pulse_Ox’ or ‘fMRIb’ or ‘MSPD, the
 desired method to detect QRS complex.
 Pulse_Ox option uses pulse oximeter data to detect QRS complex locations. APPEAR also supports using
 the fMRIb toolbox (Niazy et al., 2005) to detect QRS complex from the ECG electrode, if available.
@@ -54,32 +54,32 @@ et al., 2018). Please make sure you detect consistent and valid peaks when using
 APPEAR will output the corresponding ECG signal with the detected peaks as quality assurance (QA).
 - **APPEAR.PulseOx_Fs**: A double, the frequency of the pulse oximeter, if there is, and you wish to
 use it for correction. In this case, APPEAR.BCG_Corrention should be set to ‘Pulse_Ox’
-- **APPEA.ECG_ch_ind**: the index of the ECG channel (back electrode) in the EEG data if there is.
+- **_APPEA.ECG_ch_ind**: the index of the ECG channel (back electrode) in the EEG data if there is.
 This is needed to inform APPEAR about the indices of EEG and ECG channels.
-- APPEAR.PulseOx.minHearRate : A double, the minimum heart rate you expect when using
+- **_APPEAR.PulseOx.minHearRate** : A double, the minimum heart rate you expect when using
 Pulse_Ox. It helps with detecting more accurate peaks.
 If you are using ‘Pulse_Ox’, the following substructures will also be added.
-- APPEAR.PulseOx.Peaks: A vector of integer, peaks location of BCG artifact
-- APPEAR.PulseOx.Fs: A double, the sampling rate at which Pulse oximeter is used. We always
+- **_APPEAR.PulseOx.Peaks**: A vector of integer, peaks location of BCG artifact
+- **_APPEAR.PulseOx.Fs**: A double, the sampling rate at which Pulse oximeter is used. We always
 try to match the sampling rate of Pulse Oximeter with EEG frequency to ease the calculation.
 This is done by either upsampling or downsampling Pulse Oximeter data.
-- APPEAR.Pulse.Ox.waveform: A vector of doubles, the waveform of pulse oximeter after
+- **_APPEAR.Pulse.Ox.waveform**: A vector of doubles, the waveform of pulse oximeter after
 resampling. APPEAR uses it for applying QA on the detected peaks. 
   - MRI scanner specific parameters:
-  - TR: A double, time of repetition for the scanner.
-  - slice_per_TR: An integer, the number of selected slices per TR.
-  - scntme: An integer, scan time in secs.
-  - Markers: An vector of integers, of Markers of each TR
+  - **_TR**: A double, time of repetition for the scanner.
+  - **_slice_per_TR**: An integer, the number of selected slices per TR.
+  - **_scntme**: An integer, scan time in secs.
+  - **_Markers**: An vector of integers, of Markers of each TR
 - The previous information will be added to the APPEAR structure through load_EEG functions as
 follows:
-  - APPEAR.TR: A double, repletion time (e.g., 2)
-  - APPEAR.slice_per_TR: An integer, slices per each TR (e.g., 39)
-  - APPEAR.chlb: A cell of strings, channel labels
-  - APPEAR.mrkA: A vector of integers, indices of each TR in the original sampling rate of EEG. It
+  - **_APPEAR.TR**: A double, repletion time (e.g., 2)
+  - **_APPEAR.slice_per_TR**: An integer, slices per each TR (e.g., 39)
+  - **_APPEAR.chlb**: A cell of strings, channel labels
+  - **_APPEAR.mrkA**: A vector of integers, indices of each TR in the original sampling rate of EEG. It
 should be equal to the number of TRs in the data. (e.g., TR=2 and scan time =200, then you
 should have 100 values in the vector corresponding to the indices of the beginnings of each TR).
 - APPEAR uses EEG object from EEGLAB to store APPEAR configuration. The structure will be under
-EEG object with APPEAR name within EEG object:
+EEG object with APPEAR name within EEG object.
 
 Having introduced the main structure information, the next part put all pieces together to run APPEAR on
 our demo example.
@@ -190,16 +190,15 @@ APPEAR is a complete toolbox for processing and cleaning EEG data recorded insid
 code includes several steps to conduct the preprocessing. In this part, we highlight the main steps that are
 taken in the code.
 
-- Preprocessing:
-The preproc function suppresses the gradient artifact using the fMRIb toolbox. Additionally, it will filter
+- **Preprocessing**:
+The _preproc_ function suppresses the gradient artifact using the fMRIb toolbox. Additionally, it will filter
 the harmonics associated with slice time selection. For example, if you used TR=2 and the number of slices
 per TR was 39, then we need to filter the induces harmonies at 19.5, 39 58.5, 78,97.5,117, 136.5 Hz.
 Additionally, APPEAR filters for the other frequency like electricity power like at 60 Hz. All filtering is
 done using a bandstop filter with 0.5 Hz width around each frequency.
-- Correcting for Pulse artifact using the desired method.
-- We use pop_fmirb_pas function from fMRIb toolbox by feeding the location of the QRS indices.
+- _Correcting for Pulse artifact using the desired method_. We use pop_fmirb_pas function from fMRIb toolbox by feeding the location of the QRS indices.
 Depending on which method was selected, APPEAR tries to correct the pulse artifacts.
-- Correcting for other artifacts using icid function. This function is the most important function in
+- _Correcting for other artifacts using icid function_. This function is the most important function in
 the toolbox and tries to automatically find the artifacts corresponding to eye blinking, saccades,
 muscles, single-channel, and ballistocardiogram artifacts. To do so, ICA is applied to the EEG
 data, and then statistical and topographical analyses are conducted inside icid function to
@@ -212,8 +211,8 @@ icid(W*double(EEG.data),double(A),double(EEG.data),EEG.srate,EEG.times(end));
 # Sample of Cleaned data (Task and Resting-State Data )
 <img src="images/p4.png"  alt="Fig1" class="inline"/>
 
-- Left panel: Averaged waveforms and topographical maps for ERP waveforms (i.e., N2, P3) using APPEAR and Manual corrections among 8 participants. A) ERP Waveforms comparing automated (green) and manual (blue) preprocessing pipelines are displayed at all midline measurement electrodes. Time-zero represents the onset of the auditory stop-signal stimulus. Shaded areas represent the standard error of the mean for the ERP signal at each time point. Presented waveforms were calculated from average mastoid referenced EEG data.  B1) N2 scalp topography from the automated pipeline represents average activation across the scalp during the measurement window relative to the 200 ms pre-stimulus baseline. B2) P3 scalp topography from the automated pipeline represents average activation across the scalp during the measurement window relative to the 200 ms pre-stimulus baseline. C1) N2 scalp topography from the manual pipeline represents average activation across the scalp during the measurement window relative to the 200 ms pre-stimulus baseline C2) P3 scalp topography from the manual pipeline represents average activation across the scalp during the measurement window relative to the 200 ms pre-stimulus baseline.
-- Right panel:The time/frequency comparison (Wavelet) between APPEAR and Manually Corrected EEG Data for the exemplar four Subjects. The Continuous Wavelet Transform (CWT) was applied to the data after taking the average EEG signal among all channels (i.e., 31 channels). To compare the results between the manually and automatically corrected EEG sets, we plotted the time-frequency analysis for only a 3-mintute segment of the EEG recording taken from the middle of the EEG recording (60 seconds towards the end of the recording) for each individual subject.  The figures for all subjects show a similar pattern for the manually and automatically corrected EEG sets. We used Structural similarity (SSIM) index to compute the similarities between APPEAR and manually corrected images.   Please refer to the supplement for CWT plots for the remaining subjects.
+- ***_Left panel**: Averaged waveforms and topographical maps for ERP waveforms (i.e., N2, P3) using APPEAR and Manual corrections among 8 participants. A) ERP Waveforms comparing automated (green) and manual (blue) preprocessing pipelines are displayed at all midline measurement electrodes. Time-zero represents the onset of the auditory stop-signal stimulus. Shaded areas represent the standard error of the mean for the ERP signal at each time point. Presented waveforms were calculated from average mastoid referenced EEG data.  B1) N2 scalp topography from the automated pipeline represents average activation across the scalp during the measurement window relative to the 200 ms pre-stimulus baseline. B2) P3 scalp topography from the automated pipeline represents average activation across the scalp during the measurement window relative to the 200 ms pre-stimulus baseline. C1) N2 scalp topography from the manual pipeline represents average activation across the scalp during the measurement window relative to the 200 ms pre-stimulus baseline C2) P3 scalp topography from the manual pipeline represents average activation across the scalp during the measurement window relative to the 200 ms pre-stimulus baseline.
+- **_Right panel**: The time/frequency comparison (Wavelet) between APPEAR and Manually Corrected EEG Data for the exemplar four Subjects. The Continuous Wavelet Transform (CWT) was applied to the data after taking the average EEG signal among all channels (i.e., 31 channels). To compare the results between the manually and automatically corrected EEG sets, we plotted the time-frequency analysis for only a 3-mintute segment of the EEG recording taken from the middle of the EEG recording (60 seconds towards the end of the recording) for each individual subject.  The figures for all subjects show a similar pattern for the manually and automatically corrected EEG sets. We used Structural similarity (SSIM) index to compute the similarities between APPEAR and manually corrected images.   Please refer to the supplement for CWT plots for the remaining subjects.
 [source: Ahmad Mayeli, Obada Al Zoubi et al 2021 J. Neural Eng. 18 0460b4]
 # References
 - Delorme, A., & Makeig, S. (2004). EEGLAB: an open source toolbox for analysis of single-trial EEG
