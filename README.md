@@ -31,6 +31,7 @@ MATLAB and EEGLAB; however, for EEGLAB, you need to install the required plug-in
 MATLAB 2018 or later
 EEGLAB 2019 or later
 fMRIb
+
 | Software | Version |
 | ------ | ------ |
 | MATLAB | 2018 a  or later  |
