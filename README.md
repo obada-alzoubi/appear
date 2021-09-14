@@ -2,10 +2,6 @@
 ## _An Automatic Pipeline for EEG Artifact Reduction_
 
 #### _If you have any questions, please reach out to me at my email: obada.y.alzoubi@gmail.com_
-#### Developers
-Obada Al Zoubi
-Author, maintainer
-#### _Please refer to  Ahmad Mayeli*, Obada Al Zoubi* et al 2021 J. Neural Eng. 18 0460b4 for in-depth analysis and scientific validation of the pipeline_
 
 # Why APPEAR Toolbox ?
 Removing artifacts from simultaneous EEG-fMRI recordings is a challenging issue since it requires manual
@@ -18,11 +14,14 @@ muscles, and single-channel artifacts. This is achieved by following well-valida
 processing and Independent Component Analysis (ICA). \
 Also, APPEAR can be used to process large scale datasets while supporting parallel implementations. In this technical report, we provide a detailed explanation of using the toolbox while highlighting the important technical details for the user. APPEAR is implemented using MATLAB software with dependencies on EEGLAB (Delorme & Makeig, 2004) and fMRIb (Niazy, Beckmann, Iannetti, Brady, & Smith, 2005) toolboxes. \
 I elaborate on several parameters that are used in the APPEAR toolbox using demo examples. Additionally, I provide information about several functions and features offered with the APPEAR toolbox.
+#### _Please refer to  Ahmad Mayeli*, Obada Al Zoubi* et al 2021 J. Neural Eng. 18 0460b4 for in-depth analysis and scientific validation of the pipeline_
 
 <img src="images/p3.png"  alt="Fig1" class="inline"/>
 [source: Ahmad Mayeli, Obada Al Zoubi et al 2021 J. Neural Eng. 18 0460b4]
-
-# Requirements #
+# Installation 
+```Matlab
+```
+# Requirements 
 Please use MATLAB 2018 or later to ensure that the APPEAR toolbox is working correctly. Also, please
 use the attached version of EEGLAB with the APPEAR toolbox. It is possible to use later versions of
 MATLAB and EEGLAB; however, for EEGLAB, you need to install the required plug-in like fMRIb.
