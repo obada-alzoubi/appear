@@ -18,6 +18,7 @@ I elaborate on several parameters that are used in the APPEAR toolbox using demo
 
 <img src="images/p3.png"  alt="Fig1" class="inline"/>
 [source: Ahmad Mayeli, Obada Al Zoubi et al 2021 J. Neural Eng. 18 0460b4]
+
 # Installation 
 
 ```Matlab
