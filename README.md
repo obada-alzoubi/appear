@@ -81,17 +81,6 @@ should have 100 values in the vector corresponding to the indices of the beginni
 - APPEAR uses EEG object from EEGLAB to store APPEAR configuration. The structure will be under
 EEG object with APPEAR name within EEG object:
 
-```Matlab
-EEG.APPEAR
-``` 
-<img src="images/p1.PNG"   alt="Fig1" class="inline"/>
-
-```Matlab
-EEG.APPEAR.PulseOX
-```
-
-<img src="images/p2.PNG"  alt="Fig1" class="inline"/>
-
 Having introduced the main structure information, the next part put all pieces together to run APPEAR on
 our demo example.
 
