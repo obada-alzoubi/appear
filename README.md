@@ -19,9 +19,11 @@ I elaborate on several parameters that are used in the APPEAR toolbox using demo
 <img src="images/p3.png"  alt="Fig1" class="inline"/>
 [source: Ahmad Mayeli, Obada Al Zoubi et al 2021 J. Neural Eng. 18 0460b4]
 # Installation 
+
 ```Matlab
+gh repo clone obada-alzoubi/appear
 ```
-# Requirements 
+## Requirements 
 Please use MATLAB 2018 or later to ensure that the APPEAR toolbox is working correctly. Also, please
 use the attached version of EEGLAB with the APPEAR toolbox. It is possible to use later versions of
 MATLAB and EEGLAB; however, for EEGLAB, you need to install the required plug-in like fMRIb.
