@@ -84,13 +84,13 @@ EEG object with APPEAR name within EEG object:
 ```Matlab
 EEG.APPEAR
 ``` 
-<img src="images/p1.PNG" width="200" height="200"  alt="Fig1" class="inline"/>
+<img src="images/p1.PNG"   alt="Fig1" class="inline"/>
 
 ```Matlab
 EEG.APPEAR.PulseOX
 ```
 
-<img src="images/p2.PNG" width="200" height="200"  alt="Fig1" class="inline"/>
+<img src="images/p2.PNG"  alt="Fig1" class="inline"/>
 
 Having introduced the main structure information, the next part put all pieces together to run APPEAR on
 our demo example.
