@@ -31,11 +31,13 @@ MATLAB and EEGLAB; however, for EEGLAB, you need to install the required plug-in
 MATLAB 2018 or later \
 EEGLAB 2019 or later \
 fMRIb \
+
 | Software | Version |
 | ------ | ------ |
 | MATLAB | 2018 a  or later  |
 | EEGLAB | 2019 or later|
 | fMRIb| [v1.2 or later|
+
 
 # APPEAR Configuration Structure #
 ### APPEAR structure has the following fields that are needed for running the pipeline:
