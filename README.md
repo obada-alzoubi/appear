@@ -1,7 +1,10 @@
 # APPEAR Toolbox
 ## _An Automatic Pipeline for EEG Artifact Reduction_
 
-#### _Codes and scripts are maintained by Obada Al Zoubi. If you have any questions, please reach out to me at my email: obada.y.alzoubi@gmail.com_ 
+#### _If you have any questions, please reach out to me at my email: obada.y.alzoubi@gmail.com_
+#### Developers
+Obada Al Zoubi
+Author, maintainer
 #### _Please refer to  Ahmad Mayeli*, Obada Al Zoubi* et al 2021 J. Neural Eng. 18 0460b4 for in-depth analysis and scientific validation of the pipeline_
 
 # Why APPEAR Toolbox ?
